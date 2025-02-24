@@ -16,6 +16,7 @@ import About from "../pages/About"
 import { ActivityList } from "../pages/ActivityList"
 
 import Contact from "../pages/Contact"
+import ServiceDetails from "../pages/ServiceDetails/ServiceDetails"
 
 const Routers = () => {
     return (
@@ -37,6 +38,8 @@ const Routers = () => {
 
             <Route path="/infomation" element={<Infomation />} />
             <Route path="/about" element={<About />} />
+
+            <Route path="/service/:id?" element={<ServiceDetails />} />
         </Routes>
     )
 }
