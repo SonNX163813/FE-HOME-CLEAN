@@ -1,7 +1,7 @@
 import React from "react";
 import { FaRegNewspaper } from "react-icons/fa";
 import anhdaidien from "../../assets/bgintroduce.png";
-import styles from "../../assets/CSS/Notification.module.css";
+import styles from "../../assets/CSS/Notification/Notification.module.css";
 
 export const Notification = () => {
     let data = [

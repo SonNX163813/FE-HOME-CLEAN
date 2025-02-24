@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import houseCleanLogo from '../assets/HouseClean_logo.png';
-import { Notification } from "./Notification/Notification";
-import styles from "../assets/CSS/Notification.module.css";
+import { Notification } from "./notification/Notification";
+import styles from "../assets/CSS/Notification/Notification.module.css";
 
 
 function Navbar() {
