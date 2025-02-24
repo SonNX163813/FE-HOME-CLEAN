@@ -8,16 +8,18 @@ import SelectLocationModal from "../../components/service-details/SelectLocation
 const ServiceDetails = () => {
   const [isShowLocationModal, setIsShowLocationModal] = useState(false);
   return (
-    <div className="body">
-      <ServiceContent setIsShowLocationModal={setIsShowLocationModal} />
-      <ServiceDescription />
-      <SuggestedServices />
-      {isShowLocationModal && (
-        <SelectLocationModal
-          isShowLocationModal={isShowLocationModal}
-          setIsShowLocationModal={setIsShowLocationModal}
-        />
-      )}
+    <div className="container-service">
+      <div className="body-service">
+        <ServiceContent setIsShowLocationModal={setIsShowLocationModal} />
+        <ServiceDescription />
+        <SuggestedServices />
+        {isShowLocationModal && (
+          <SelectLocationModal
+            isShowLocationModal={isShowLocationModal}
+            setIsShowLocationModal={setIsShowLocationModal}
+          />
+        )}
+      </div>
     </div>
   );
 };
