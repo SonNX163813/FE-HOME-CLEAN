@@ -5,12 +5,12 @@ import styles from "../../assets/CSS/Notification/Notification.module.css";
 
 export const Notification = () => {
     let data = [
-        { id: 1, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56" , day : "Thứ tư" },
-        { id: 2, tittle: "Hết hạn đăng tải công việc", time: "14:56", day : "Thứ 4" },
-        { id: 3, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day : "Thứ tư" },
-        { id: 4, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day : "Thứ tư" },
-        { id: 5, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day : "Thứ tư" },
-        { id: 6, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day : "Thứ tư" },
+        { id: 1, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day: "Thứ tư" },
+        { id: 2, tittle: "Hết hạn đăng tải công việc", time: "14:56", day: "Thứ 4" },
+        { id: 3, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day: "Thứ tư" },
+        { id: 4, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day: "Thứ tư" },
+        { id: 5, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day: "Thứ tư" },
+        { id: 6, tittle: "Công việc bạn đăng đã có người nhận", time: "14:56", day: "Thứ tư" },
     ];
 
     // Sắp xếp data theo ID giảm dần (mới nhất lên trên)
