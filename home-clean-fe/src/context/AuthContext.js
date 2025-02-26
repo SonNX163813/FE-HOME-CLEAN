@@ -26,18 +26,16 @@ const AuthReducer = (state, action) => {
         case "LOGIN_START":
             return { ...state, user: null, loading: true, error: null };
 
-<<<<<<< HEAD
+
         case "LOGIN_SUCCESS_CUSTOMER":
-=======
-        case "LOGIN_SUCCESS":
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
+
             const { user, token, customerId } = action.payload;
             localStorage.setItem("user", JSON.stringify(user));
             localStorage.setItem("token", token);
             localStorage.setItem("customerId", customerId);
             return { ...state, user, token, customerId, loading: false, error: null };
 
-<<<<<<< HEAD
+
         case "LOGIN_SUCCESS_CLEANER":
             const { emp, tokenC, cleanerId } = action.payload;
             localStorage.setItem("user", JSON.stringify(emp));
@@ -57,14 +55,13 @@ const AuthReducer = (state, action) => {
             localStorage.setItem("user", JSON.stringify(userProfile));
             return { ...state, user: empProfile };
 
-=======
-        case "FETCH_PROFILE_SUCCESS":
-            const { name, phone, email, gender, dob, addresses } = action.payload;
-            const userProfile = { name, phone, email, gender, dob, addresses };
-            localStorage.setItem("user", JSON.stringify(userProfile));
-            return { ...state, user: userProfile };
 
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
+        // case "FETCH_PROFILE_SUCCESS":
+        //     const { name, phone, email, gender, dob, addresses } = action.payload;
+        //     const userProfile = { name, phone, email, gender, dob, addresses };
+        //     localStorage.setItem("user", JSON.stringify(userProfile));
+        //     return { ...state, user: userProfile };
+
 
         case "LOGIN_FAILURE":
             return { ...state, user: null, loading: false, error: action.payload };

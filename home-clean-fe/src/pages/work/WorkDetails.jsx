@@ -9,7 +9,7 @@ const WorkDetails = () => {
     return (
         <div className={styles.container}>
             <div className={styles.backButton}>
-                <Link to="/" className={styles.backLink}>
+                <Link to="/homeclean" className={styles.backLink}>
                     <FaArrowLeft />
                     <span>Quay lại trang chủ</span>
                 </Link>
