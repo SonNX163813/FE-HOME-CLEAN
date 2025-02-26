@@ -107,7 +107,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
           </p>
         </div>
         {/* <p style={{ position: "relative", fontSize: 30, fontWeight: 500 }}>
-          100.000 đ
+          100.000
           <span
             style={{
               position: "absolute",

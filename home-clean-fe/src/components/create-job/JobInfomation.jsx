@@ -64,7 +64,7 @@ const JobInfomation = ({ selectedTime }) => {
             >
                 <span>Tổng thanh toán</span>
                 <h4 style={{ textAlign: "right", fontSize: 20}}>
-                    {selectedPrice.toLocaleString()} VNĐ
+                    {selectedPrice?.toLocaleString()} VNĐ
                 </h4>
             </div>
             
@@ -98,6 +98,7 @@ const JobInfomation = ({ selectedTime }) => {
                     </div>
                 </Link>
                 <Link
+                to='/ordersuccess'
                 style={{
                     textDecoration : 'none'
                 }}
