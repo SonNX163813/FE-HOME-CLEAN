@@ -1,10 +1,30 @@
 import serviceImage from "../../assets/imgService/service.png";
 import LocationIcon from "../iconsvg/LocationIcon";
 import { useState } from "react";
+<<<<<<< HEAD
 
 const ServiceContent = ({ setIsShowLocationModal }) => {
   const [selectedTime, setSelectedTime] = useState(2);
   const times = [2, 3, 4];
+=======
+import { Link } from "react-router-dom";
+import styles from '../../assets/CSS/Service/ServiceContent.module.css'
+
+const ServiceContent = ({ setIsShowLocationModal }) => {
+  const [selectedArea, setSelectedArea] = useState("20m² - 40m²");
+  const areas = [
+    { label: "< 20m²", price: 150000 },
+    { label: "20m² - 40m²", price: 200000 },
+    { label: "> 40m²", price: 300000 },
+  ];
+
+  const data = {
+    address : 'Số 36 Đường Tôn Đức Thắng, Khu 2, Thị trấn Côn Đảo, Huyện Côn Đảo,Tỉnh Bà Rịa - Vũng Tàu, Việt Nam.'
+  }
+
+  const selectedPrice = areas.find(area => area.label === selectedArea)?.price || 0;
+
+>>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
   return (
     <div className="service-content">
       <div className="layout1">
@@ -65,12 +85,17 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
               </div>
             </div>
             <p style={{ maxWidth: "60%", color: "#B8B8B8" }}>
+<<<<<<< HEAD
               Số 36 Đường Tôn Đức Thắng, Khu 2, Thị trấn Côn Đảo, Huyện Côn Đảo,
               Tỉnh Bà Rịa - Vũng Tàu, Việt Nam.
+=======
+              {data.address}
+>>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
             </p>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+<<<<<<< HEAD
           <p style={{ fontWeight: 600, fontSize: 16 }}>Thời lượng</p>
           <p style={{ fontWeight: 400, fontSize: 14 }}>
             Ước tính thời gian và diện tích cần dọn dẹp
@@ -97,6 +122,33 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         </div>
         <p style={{ position: "relative", fontSize: 30, fontWeight: 500 }}>
           100.000 đ
+=======
+          <p style={{ fontWeight: 600, fontSize: 16 }}>Diện tích</p>
+          <div style={{ display: "flex", gap: 12 }}>
+            {areas.map(({ label }) => (
+              <div
+                key={label}
+                className="area-select"
+                style={{
+                  padding: "6px 12px",
+                  backgroundColor: selectedArea === label ? "#B0FFDC" : "",
+                  border: `2px solid ${selectedArea === label ? "#039855" : "#d4d4d4"}`,
+                  cursor: "pointer",
+                  borderRadius : 8
+                }}
+                onClick={() => setSelectedArea(label)}
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+          <p style={{ fontSize: 30, fontWeight: 500 }}>
+            {selectedPrice.toLocaleString()} VNĐ
+          </p>
+        </div>
+        {/* <p style={{ position: "relative", fontSize: 30, fontWeight: 500 }}>
+          100.000
+>>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
           <span
             style={{
               position: "absolute",
@@ -108,6 +160,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
           >
             /2h
           </span>
+<<<<<<< HEAD
         </p>
         <button
           style={{
@@ -123,6 +176,33 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         >
           Tiếp theo
         </button>
+=======
+        </p> */}
+        
+          <button
+            className={styles.btn_Next}
+            style={{
+              width: "fit-content",
+              padding: "12px 16px 12px 16px",
+              color: "white",
+              backgroundColor: "#039855",
+              border: "none",
+              fontWeight: 700,
+              borderRadius: 7,
+              cursor: "pointer",
+              transitionDuration : '0.5s'
+            }}
+          >
+            <Link className={styles.link_Next} to="/createjob"
+            state={{selectedArea , selectedPrice }}
+            >
+              Tiếp theo
+            </Link>
+            
+          </button>
+        
+        
+>>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
       </div>
     </div>
   );

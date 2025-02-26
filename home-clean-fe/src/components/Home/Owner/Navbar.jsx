@@ -4,6 +4,10 @@ import { AuthContext } from "../../../context/AuthContext";
 import houseCleanLogo from '../../../assets/HouseClean_logo.png';
 import { Notification } from "../../Notification/Notification";
 import styles from "../../../assets/CSS/Notification/Notification.module.css"
+import { AuthContext } from "../context/AuthContext";
+import houseCleanLogo from '../assets/HouseClean_logo.png';
+import Notification from "../components/Notification/Notification";
+import styles from "../assets/CSS/Notification/Notification.module.css";
 
 
 function Navbar() {

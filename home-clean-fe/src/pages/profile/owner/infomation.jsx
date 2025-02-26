@@ -25,7 +25,11 @@ const Infomation = () => {
 
                     const data = await response.json();
                     if (response.ok) {
+<<<<<<< HEAD
                         dispatch({ type: 'FETCH_PROFILE_SUCCESS_CUSTOMER', payload: data });
+=======
+                        dispatch({ type: 'FETCH_PROFILE_SUCCESS', payload: data });
+>>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
                     } else {
                         message.error(data.message || "Không thể lấy thông tin người dùng.");
                     }
