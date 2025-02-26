@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import houseCleanLogo from '../assets/HouseClean_logo.png';
-import { Notification } from "../components/notification/Notification";
+import  Notification  from "../components/Notification/Notification";
 import styles from "../assets/CSS/Notification/Notification.module.css";
 
 
