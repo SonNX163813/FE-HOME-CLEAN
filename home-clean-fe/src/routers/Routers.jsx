@@ -17,6 +17,7 @@ import { ActivityList } from "../pages/ActivityList"
 
 import Contact from "../pages/Contact"
 import ServiceDetails from "../pages/ServiceDetails/ServiceDetails"
+import CreateJob from "../pages/ServiceDetails/CreateJob"
 
 const Routers = () => {
     return (
@@ -40,6 +41,8 @@ const Routers = () => {
             <Route path="/about" element={<About />} />
 
             <Route path="/service/:id?" element={<ServiceDetails />} />
+
+            <Route path="/createjob" element={<CreateJob />} />
         </Routes>
     )
 }

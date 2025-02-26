@@ -16,7 +16,7 @@ const ServiceCard = () => {
           Mô tả giới thiệu ngắn gọn về dịch vụ
         </p>
       </div>
-      <p className={styles.servicePrice}>100.000đ/h</p>
+      {/* <p className={styles.servicePrice}>100.000đ/h</p> */}
       <div className={styles.serviceFooter}>
         <button className={styles.hireButton}>Thuê Ngay</button>
         <div className={styles.ratingSection}>
