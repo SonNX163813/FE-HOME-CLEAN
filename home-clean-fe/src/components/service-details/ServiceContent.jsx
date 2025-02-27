@@ -1,30 +1,20 @@
 import serviceImage from "../../assets/imgService/service.png";
 import LocationIcon from "../iconsvg/LocationIcon";
-import { useState } from "react";
-<<<<<<< HEAD
-
-const ServiceContent = ({ setIsShowLocationModal }) => {
-  const [selectedTime, setSelectedTime] = useState(2);
-  const times = [2, 3, 4];
-=======
+import { useState , useEffect} from "react";
 import { Link } from "react-router-dom";
 import styles from '../../assets/CSS/Service/ServiceContent.module.css'
 
 const ServiceContent = ({ setIsShowLocationModal }) => {
-  const [selectedArea, setSelectedArea] = useState("20m² - 40m²");
-  const areas = [
-    { label: "< 20m²", price: 150000 },
-    { label: "20m² - 40m²", price: 200000 },
-    { label: "> 40m²", price: 300000 },
-  ];
 
-  const data = {
-    address : 'Số 36 Đường Tôn Đức Thắng, Khu 2, Thị trấn Côn Đảo, Huyện Côn Đảo,Tỉnh Bà Rịa - Vũng Tàu, Việt Nam.'
-  }
+  const [serviceData, setServiceData] = useState(null);
 
-  const selectedPrice = areas.find(area => area.label === selectedArea)?.price || 0;
+  useEffect(() => {
+    fetch("http://localhost:8080/api/services/details/1")
+      .then((res) => res.json())
+      .then((data) => setServiceData(data))
+      .catch((err) => console.error("Lỗi khi gọi API:", err));
+  }, []);
 
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
   return (
     <div className="service-content">
       <div className="layout1">
@@ -42,24 +32,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         }}
       >
         <div>
-          <h2>Dọn phòng khách</h2>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <p>
-              <span style={{ fontWeight: 600 }}>Danh mục: </span>
-              <span style={{ fontWeight: 400 }}>Dọn nhà</span>
-            </p>
-            <div
-              style={{
-                width: 1,
-                height: 16,
-                backgroundColor: "#E4E7EC",
-              }}
-            ></div>
-            <p>
-              <span style={{ fontWeight: 600 }}>Nhóm: </span>
-              <span style={{ fontWeight: 400 }}>Dọn phòng khách</span>
-            </p>
-          </div>
+          <h2> {serviceData?.name || "Dịch vụ"}</h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <p style={{ fontWeight: 600, fontSize: 16 }}>Chọn vị trí</p>
@@ -85,100 +58,17 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
               </div>
             </div>
             <p style={{ maxWidth: "60%", color: "#B8B8B8" }}>
-<<<<<<< HEAD
-              Số 36 Đường Tôn Đức Thắng, Khu 2, Thị trấn Côn Đảo, Huyện Côn Đảo,
-              Tỉnh Bà Rịa - Vũng Tàu, Việt Nam.
-=======
-              {data.address}
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
+              Thạch Thất , Hà Nội
+
             </p>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-<<<<<<< HEAD
-          <p style={{ fontWeight: 600, fontSize: 16 }}>Thời lượng</p>
-          <p style={{ fontWeight: 400, fontSize: 14 }}>
-            Ước tính thời gian và diện tích cần dọn dẹp
-          </p>
-          <div style={{ display: "flex", gap: 12 }}>
-            {times.map((time) => (
-              <div
-                key={time}
-                className="time-select"
-                style={{
-                  padding: "6px 12px 6px 12px",
-                  backgroundColor: `${selectedTime == time ? "#B0FFDC" : ""}`,
-                  border: `2px solid ${
-                    selectedTime == time ? "#039855" : "#d4d4d4"
-                  }`,
-                  cursor: "pointer",
-                }}
-                onClick={() => setSelectedTime(time)}
-              >
-                {time} giờ
-              </div>
-            ))}
-          </div>
-        </div>
-        <p style={{ position: "relative", fontSize: 30, fontWeight: 500 }}>
-          100.000 đ
-=======
-          <p style={{ fontWeight: 600, fontSize: 16 }}>Diện tích</p>
-          <div style={{ display: "flex", gap: 12 }}>
-            {areas.map(({ label }) => (
-              <div
-                key={label}
-                className="area-select"
-                style={{
-                  padding: "6px 12px",
-                  backgroundColor: selectedArea === label ? "#B0FFDC" : "",
-                  border: `2px solid ${selectedArea === label ? "#039855" : "#d4d4d4"}`,
-                  cursor: "pointer",
-                  borderRadius : 8
-                }}
-                onClick={() => setSelectedArea(label)}
-              >
-                {label}
-              </div>
-            ))}
-          </div>
+
           <p style={{ fontSize: 30, fontWeight: 500 }}>
-            {selectedPrice.toLocaleString()} VNĐ
+             {serviceData.additionalPrice} VNĐ
           </p>
         </div>
-        {/* <p style={{ position: "relative", fontSize: 30, fontWeight: 500 }}>
-          100.000
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
-          <span
-            style={{
-              position: "absolute",
-              bottom: -4,
-              fontSize: 20,
-              fontWeight: 500,
-              color: "#475467",
-            }}
-          >
-            /2h
-          </span>
-<<<<<<< HEAD
-        </p>
-        <button
-          style={{
-            width: "fit-content",
-            padding: "12px 16px 12px 16px",
-            color: "white",
-            backgroundColor: "#039855",
-            border: "none",
-            fontWeight: 700,
-            borderRadius: 7,
-            cursor: "pointer",
-          }}
-        >
-          Tiếp theo
-        </button>
-=======
-        </p> */}
-        
           <button
             className={styles.btn_Next}
             style={{
@@ -194,15 +84,11 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
             }}
           >
             <Link className={styles.link_Next} to="/createjob"
-            state={{selectedArea , selectedPrice }}
             >
               Tiếp theo
             </Link>
             
           </button>
-        
-        
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
       </div>
     </div>
   );
