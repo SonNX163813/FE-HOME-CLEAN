@@ -1,20 +1,27 @@
 import serviceImage from "../../assets/imgService/service.png";
 import LocationIcon from "../iconsvg/LocationIcon";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import styles from '../../assets/CSS/Service/ServiceContent.module.css'
-
+import ServiceDescription from "./ServiceDescription";
 const ServiceContent = ({ setIsShowLocationModal }) => {
-
+  const { id } = useParams();
   const [serviceData, setServiceData] = useState(null);
 
+  const location = useLocation();
+  const serviceId = location.state?.serviceId;
+
   useEffect(() => {
-    fetch("http://localhost:8080/api/services/details/1")
+    if (!id) return;
+
+    fetch(`http://localhost:8080/api/services/details/${id}`)
       .then((res) => res.json())
       .then((data) => setServiceData(data))
       .catch((err) => console.error("Lỗi khi gọi API:", err));
-  }, []);
+  }, [id]);
 
+  const des = serviceData?.description;
+  const data = "Thạch thất , Hà Nội"
   return (
     <div className="service-content">
       <div className="layout1">
@@ -34,6 +41,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         <div>
           <h2> {serviceData?.name || "Dịch vụ"}</h2>
         </div>
+        <ServiceDescription description={des} />
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <p style={{ fontWeight: 600, fontSize: 16 }}>Chọn vị trí</p>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -58,7 +66,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
               </div>
             </div>
             <p style={{ maxWidth: "60%", color: "#B8B8B8" }}>
-              Thạch Thất , Hà Nội
+              {data}
 
             </p>
           </div>
@@ -66,7 +74,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
 
           <p style={{ fontSize: 30, fontWeight: 500 }}>
-            {serviceData.additionalPrice} VNĐ
+            {serviceData?.additionalPrice.toLocaleString()} VNĐ
           </p>
         </div>
         <button
@@ -83,10 +91,20 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
             transitionDuration: '0.5s'
           }}
         >
-          <Link className={styles.link_Next} to="/createjob"
+          <Link
+            className={styles.link_Next}
+            to="/createjob"
+            state={{
+              price: serviceData?.additionalPrice.toLocaleString(),
+              serviceDetailId: serviceData?.serviceDetailId,
+              serviceId: serviceId,
+              address: data,
+              name: serviceData?.name
+            }}
           >
             Tiếp theo
           </Link>
+
 
         </button>
       </div>
