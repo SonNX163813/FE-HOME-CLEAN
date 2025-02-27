@@ -12,8 +12,7 @@ const HomePage = () => {
         <>
             <Navbar />
             <Hero />
-            <ServiceSection title="Dịch vụ tiêu biểu" />
-            <ServiceSection title="Sản phẩm mới" />
+            <ServiceSection />
             <FeaturesSection />
             <TestimonialSection />
             <NewsSection />
