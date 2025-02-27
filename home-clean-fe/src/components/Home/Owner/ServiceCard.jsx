@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function ServiceCard({ id ,image, title, description, rating, reviews }) {
+function ServiceCard({ id ,image, title, description, rating, reviews , serviceId }) {
   return (
     <div className="service-card">
       <div className="card-image">
@@ -17,7 +17,7 @@ function ServiceCard({ id ,image, title, description, rating, reviews }) {
           {/* <div className="price">{price}đ/h</div> */}
         </div>
         <div className="card-footer">
-          <Link to={`/service/${id}`}>
+          <Link to={`/service/${id}` } state = {serviceId} >
             <button className="hire-btn">Thuê ngay</button>
           </Link>
           <div className="user-avatars">

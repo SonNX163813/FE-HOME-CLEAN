@@ -34,6 +34,7 @@ function ServiceSection() {
                     // price={detail.additionalPrice || "Liên hệ"}
                     rating={4.6}
                     reviews={100}
+                    serviceId = {service.serviceId}
                   />
                 ))
               ) : (

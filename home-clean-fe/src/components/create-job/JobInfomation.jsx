@@ -1,10 +1,29 @@
-import React from "react";
+import React ,{ useEffect ,useState } from "react";
 import Time from "./Time";
-import { Link , useLocation  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const JobInfomation = ({ selectedTime }) => {
-    const location = useLocation();
-    const { selectedArea , selectedPrice } = location.state || {};
+const JobInfomation = ({ price, serviceDetailId, serviceId, address,  selectedDate, hour, minute  }) => {
+
+    const [serviceData, setServiceData] = useState(null);
+
+    useEffect(() => {
+        if (!serviceDetailId) return; // Kiểm tra nếu chưa có serviceDetailId thì không gọi API
+
+        const fetchServiceData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/services/details/${serviceDetailId}`);
+                if (!response.ok) {
+                    throw new Error("Lỗi khi gọi API");
+                }
+                const data = await response.json();
+                setServiceData(data);
+            } catch (error) {
+                console.error("Lỗi khi gọi API:", error);
+            }
+        };
+
+        fetchServiceData();
+    }, [serviceDetailId]);
     
     return (
         <div 
@@ -17,29 +36,35 @@ const JobInfomation = ({ selectedTime }) => {
             <h4>Thời gian làm việc</h4>
             <p>
                 <span>Ngày làm việc</span>
-                <span style={{ float: "right" }}>Ngày 16 - Tháng 2 - Năm 2025</span>
+                <span style={{ float: "right" }}>{selectedDate
+                        ? `Ngày ${selectedDate.getDate()}- Tháng ${selectedDate.getMonth() + 1}- Năm ${selectedDate.getFullYear()}`
+                        : "Chưa chọn"}</span>
             </p>
             <p>
-                <span>Thời gian</span>
-                <span style={{ float: "right" }}> {selectedTime} giờ - Từ 13:00 đến 16:00</span>
+                <span>Thời gian làm việc</span>
+                <span style={{ float: "right" }}>
+                    {selectedDate
+                        ? `${hour}h${minute}p`
+                        : "Chưa chọn"}
+                </span>
             </p>
 
             <br />
             <h4>Chi tiết</h4>
             <p>
                 <span>Loại dịch vụ</span>
-                <span style={{ float: "right" }}>Dọn phòng khách</span>
+                <span style={{ float: "right" }}>{serviceData?.name}</span>
             </p>
             <p>
                 <span>Địa điểm</span>
                 <span style={{ float: "right" }}>
-                Số 36 Đường Tôn Đức Thắng, Khu 2, Thị trấn Côn Đảo...
+                {address}
                 </span>
             </p>
-            <p>
+            {/* <p>
                 <span>Khối lượng công việc</span>
-                <span style={{ float: "right" }}>{selectedArea}</span>
-            </p>
+                <span style={{ float: "right" }}>30m2</span>
+            </p> */}
             <p>
                 <span>Số nhân công</span>
                 <span style={{ float: "right" }}>1 người</span>
@@ -64,7 +89,7 @@ const JobInfomation = ({ selectedTime }) => {
             >
                 <span>Tổng thanh toán</span>
                 <h4 style={{ textAlign: "right", fontSize: 20}}>
-                    {selectedPrice?.toLocaleString()} VNĐ
+                    {price} VNĐ
                 </h4>
             </div>
             
@@ -77,7 +102,7 @@ const JobInfomation = ({ selectedTime }) => {
                 bottom : -60
             }}
             >
-                <Link to="/service"
+                <Link to="/"
                 style={{
                     textDecoration : 'none'
                 }}

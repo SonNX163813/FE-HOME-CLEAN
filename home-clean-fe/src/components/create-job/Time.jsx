@@ -2,7 +2,7 @@ import React, { useState , useEffect } from "react";
 import { Card, Button } from "antd";
 import styles from "../../assets/CSS/createjob/Time.module.css";
 
-const Time = () => {
+const Time = ({ onTimeChange }) => {
     const [weekOffset, setWeekOffset] = useState(0);
     const today = new Date();
     today.setDate(today.getDate() + weekOffset);
@@ -21,7 +21,6 @@ const Time = () => {
     });
 
     const [selectedDate, setSelectedDate] = useState(today);
-
     const [hour, setHour] = useState(0);
     const [minute, setMinute] = useState(0);
 
@@ -29,21 +28,29 @@ const Time = () => {
         const now = new Date();
         setHour(now.getHours());
         setMinute(now.getMinutes());
+        onTimeChange(today, now.getHours(), now.getMinutes());
     }, []);
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        onTimeChange(date, hour, minute);
+    };
 
     const handleHourChange = (e) => {
         let value = parseInt(e.target.value, 10);
         if (isNaN(value) || value < 0) value = 0;
         if (value > 23) value = 23;
         setHour(value);
+        onTimeChange(selectedDate, value, minute);
     };
 
     const handleMinuteChange = (e) => {
-        let value = e.target.value.replace(/^0+/, ""); // Loại bỏ số 0 đầu
+        let value = e.target.value.replace(/^0+/, ""); 
         value = parseInt(value, 10);
         if (isNaN(value) || value < 0) value = 0;
         if (value > 59) value = 59;
         setMinute(value);
+        onTimeChange(selectedDate, hour, value);
     };
 
     return (
@@ -74,7 +81,7 @@ const Time = () => {
                             className={`${styles.dayButton} ${
                                 selectedDate?.toDateString() === day.fullDate.toDateString() ? styles.selected : ""
                             }`}
-                            onClick={() => setSelectedDate(day.fullDate)}
+                            onClick={() => handleDateChange(day.fullDate)}
                         >
                             <b>{day.label}</b>
                             {day.date}
@@ -84,41 +91,18 @@ const Time = () => {
             </Card>
 
             <div className={styles.timeSelection}>
-                    <h4>Chọn giờ làm việc</h4>
-                    <p>Giờ mà người giúp việc sẽ đến</p>
-                    <div className={styles.timeInputGroup}>
-                        <div className={styles.timeInput}>
-                            <input
-                                type="number"
-                                value={hour}
-                                onChange={handleHourChange}
-                                min="0"
-                                max="23"
-                            />
-                            <span>h</span>
-                        </div>
-                        <span className={styles.timeSeparator}>:</span>
-                        <div className={styles.timeInput}>
-                            <input
-                                type="number"
-                                value={minute}
-                                onChange={handleMinuteChange}
-                                min="0"
-                                max="59"
-                            />
-                            <span>p</span>
-                        </div>
+                <h4>Chọn giờ làm việc</h4>
+                <p>Giờ mà người giúp việc sẽ đến</p>
+                <div className={styles.timeInputGroup}>
+                    <div className={styles.timeInput}>
+                        <input type="number" value={hour} onChange={handleHourChange} min="0" max="23" />
+                        <span>h</span>
                     </div>
-                </div>
-
-            <div className={styles.phoneSection}>
-                <h4>Số điện thoại</h4>
-                <p>Nhân công sẽ liên hệ với bạn khi đến nơi</p>
-                <div className={styles.phoneContainer}>
-                    <p className={styles.phonePrefix}>(+84)</p>
-                    <p>941726687</p>
-                    <div className={styles.divider}></div>
-                    <div className={styles.changeButton}>Thay đổi</div>
+                    <span className={styles.timeSeparator}>:</span>
+                    <div className={styles.timeInput}>
+                        <input type="number" value={minute} onChange={handleMinuteChange} min="0" max="59" />
+                        <span>p</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,3 +110,4 @@ const Time = () => {
 };
 
 export default Time;
+
