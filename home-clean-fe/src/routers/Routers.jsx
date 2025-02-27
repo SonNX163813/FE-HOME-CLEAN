@@ -23,12 +23,6 @@ import { ActivityList } from "../pages/ActivityList"
 
 import Contact from "../pages/Contact"
 import ServiceDetails from "../pages/ServiceDetails/ServiceDetails"
-<<<<<<< HEAD
-=======
-import CreateJob from "../pages/ServiceDetails/CreateJob"
-import OrderSuccess from "../pages/order_success/OrderSuccess"
-import WorkDetails from "../pages/work/WorkDetails"
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
 
 const Routers = () => {
     return (
@@ -55,15 +49,6 @@ const Routers = () => {
             <Route path="/about" element={<About />} />
 
             <Route path="/service/:id?" element={<ServiceDetails />} />
-<<<<<<< HEAD
-=======
-
-            <Route path="/createjob" element={<CreateJob />} />
-
-            <Route path="/ordersuccess" element={<OrderSuccess />} />
-
-            <Route path="/workdetails" element={<WorkDetails />} />
->>>>>>> ffdb2399b0d720051fe401043c7055b460f0aeef
         </Routes>
     )
 }
