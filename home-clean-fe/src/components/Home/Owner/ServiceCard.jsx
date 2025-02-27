@@ -14,7 +14,7 @@ function ServiceCard({ id ,image, title, description, rating, reviews }) {
             <span className="stars">{rating} ★</span>
             <span className="review-count">({reviews})</span>
           </div>
-          {/* <div className="price">{price}đ/h</div> */}
+          <div className="price">{price}đ/h</div>
         </div>
         <div className="card-footer">
           <Link to={`/service/${id}`}>

@@ -1,6 +1,6 @@
 import serviceImage from "../../assets/imgService/service.png";
 import LocationIcon from "../iconsvg/LocationIcon";
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from '../../assets/CSS/Service/ServiceContent.module.css'
 
@@ -66,29 +66,29 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
 
           <p style={{ fontSize: 30, fontWeight: 500 }}>
-             {serviceData.additionalPrice} VNĐ
+            {serviceData.additionalPrice} VNĐ
           </p>
         </div>
-          <button
-            className={styles.btn_Next}
-            style={{
-              width: "fit-content",
-              padding: "12px 16px 12px 16px",
-              color: "white",
-              backgroundColor: "#039855",
-              border: "none",
-              fontWeight: 700,
-              borderRadius: 7,
-              cursor: "pointer",
-              transitionDuration : '0.5s'
-            }}
+        <button
+          className={styles.btn_Next}
+          style={{
+            width: "fit-content",
+            padding: "12px 16px 12px 16px",
+            color: "white",
+            backgroundColor: "#039855",
+            border: "none",
+            fontWeight: 700,
+            borderRadius: 7,
+            cursor: "pointer",
+            transitionDuration: '0.5s'
+          }}
+        >
+          <Link className={styles.link_Next} to="/createjob"
           >
-            <Link className={styles.link_Next} to="/createjob"
-            >
-              Tiếp theo
-            </Link>
-            
-          </button>
+            Tiếp theo
+          </Link>
+
+        </button>
       </div>
     </div>
   );
