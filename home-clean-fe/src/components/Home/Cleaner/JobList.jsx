@@ -2,6 +2,7 @@ import React from 'react';
 import { FaMapMarkerAlt, FaClock, FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+
 function JobCard({ type, status, date, time, location, price }) {
     return (
         <div className="job-card">
@@ -172,3 +173,5 @@ function JobList() {
 }
 
 export default JobList;
+
+
