@@ -1,23 +1,19 @@
 import serviceImage from "../../assets/imgService/service.png";
 import LocationIcon from "../iconsvg/LocationIcon";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { Link } from "react-router-dom";
 import styles from '../../assets/CSS/Service/ServiceContent.module.css'
 
 const ServiceContent = ({ setIsShowLocationModal }) => {
-  const [selectedArea, setSelectedArea] = useState("20m² - 40m²");
-  const areas = [
-    { label: "< 20m²", price: 150000 },
-    { label: "20m² - 40m²", price: 200000 },
-    { label: "> 40m²", price: 300000 },
-  ];
 
-  const data = {
-    address : 'Số 36 Đường Tôn Đức Thắng, Khu 2, Thị trấn Côn Đảo, Huyện Côn Đảo,Tỉnh Bà Rịa - Vũng Tàu, Việt Nam.'
-  }
+  const [serviceData, setServiceData] = useState(null);
 
-  const selectedPrice = areas.find(area => area.label === selectedArea)?.price || 0;
-
+  useEffect(() => {
+    fetch("http://localhost:8080/api/services/details/1")
+      .then((res) => res.json())
+      .then((data) => setServiceData(data))
+      .catch((err) => console.error("Lỗi khi gọi API:", err));
+  }, []);
 
   return (
     <div className="service-content">
@@ -36,24 +32,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         }}
       >
         <div>
-          <h2>Dọn phòng khách</h2>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <p>
-              <span style={{ fontWeight: 600 }}>Danh mục: </span>
-              <span style={{ fontWeight: 400 }}>Dọn nhà</span>
-            </p>
-            <div
-              style={{
-                width: 1,
-                height: 16,
-                backgroundColor: "#E4E7EC",
-              }}
-            ></div>
-            <p>
-              <span style={{ fontWeight: 600 }}>Nhóm: </span>
-              <span style={{ fontWeight: 400 }}>Dọn phòng khách</span>
-            </p>
-          </div>
+          <h2> {serviceData?.name || "Dịch vụ"}</h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <p style={{ fontWeight: 600, fontSize: 16 }}>Chọn vị trí</p>
@@ -79,34 +58,15 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
               </div>
             </div>
             <p style={{ maxWidth: "60%", color: "#B8B8B8" }}>
-              {data.address}
+              Thạch Thất , Hà Nội
 
             </p>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
 
-          <p style={{ fontWeight: 600, fontSize: 16 }}>Diện tích</p>
-          <div style={{ display: "flex", gap: 12 }}>
-            {areas.map(({ label }) => (
-              <div
-                key={label}
-                className="area-select"
-                style={{
-                  padding: "6px 12px",
-                  backgroundColor: selectedArea === label ? "#B0FFDC" : "",
-                  border: `2px solid ${selectedArea === label ? "#039855" : "#d4d4d4"}`,
-                  cursor: "pointer",
-                  borderRadius : 8
-                }}
-                onClick={() => setSelectedArea(label)}
-              >
-                {label}
-              </div>
-            ))}
-          </div>
           <p style={{ fontSize: 30, fontWeight: 500 }}>
-            {selectedPrice.toLocaleString()} VNĐ
+             {serviceData.additionalPrice} VNĐ
           </p>
         </div>
           <button
@@ -124,7 +84,6 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
             }}
           >
             <Link className={styles.link_Next} to="/createjob"
-            state={{selectedArea , selectedPrice }}
             >
               Tiếp theo
             </Link>
