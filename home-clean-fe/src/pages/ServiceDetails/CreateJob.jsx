@@ -3,12 +3,8 @@ import Time from '../../components/create-job/Time';
 import Note from '../../components/create-job/Note';
 import Pay from '../../components/create-job/Pay';
 import JobInfomation from "../../components/create-job/JobInfomation";
-import { useLocation } from "react-router-dom";
 
 const CreateJob = () => {
-    const location = useLocation();
-    const state = location.state || {};
-    const { price, serviceDetailId, serviceId, address } = state;
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [hour, setHour] = useState(0);
@@ -29,10 +25,6 @@ const CreateJob = () => {
                 <Pay />
                 <h3 style={{ margin: "15px 0px" }}>Thông tin công việc</h3>
                 <JobInfomation 
-                    price={price} 
-                    serviceDetailId={serviceDetailId} 
-                    serviceId={serviceId} 
-                    address={address}
                     selectedDate={selectedDate}
                     hour={hour}
                     minute={minute}

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 function ServiceCard({ id ,image, title, description, rating, reviews , serviceId }) {
+  
   return (
     <div className="service-card">
       <div className="card-image">

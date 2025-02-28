@@ -9,8 +9,8 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
   const [serviceData, setServiceData] = useState(null);
 
   const location = useLocation();
-  const serviceId = location.state?.serviceId;
-
+  const state = location.state || {};
+ 
   useEffect(() => {
     if (!id) return;
 
@@ -97,9 +97,10 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
               state={{
                 price: serviceData?.additionalPrice.toLocaleString(),
                 serviceDetailId: serviceData?.serviceDetailId,
-                serviceId: serviceId,
+                serviceId: state,
                 address: data,
-                name: serviceData?.name
+                name: serviceData?.name,
+                test : '1'
               }}
             >
               Tiếp theo
