@@ -2,35 +2,29 @@ import styles from "../../assets/CSS/Service/ServiceCard.module.css";
 import serviceImg from "../../assets/imgService/service-suggest.png";
 import avatarRated from "../../assets/imgService/avatar-rated.png";
 import StarIcon from "../../components/iconsvg/StarIcon";
-import { Link } from "react-router-dom";
 
-const ServiceCard = ({ id ,image, title, description, rating, reviews , serviceId }) => {
+const ServiceCard = () => {
   return (
     <div className={styles.serviceCard}>
       <img className={styles.serviceImage} src={serviceImg} alt="Service" />
       <div>
         <p className={styles.serviceName}>
-          {title}
+          Tên dịch vụ{" "}
           <span className={styles.serviceStatus}></span>
         </p>
         <p className={styles.serviceDescription}>
-          {description}
+          Mô tả giới thiệu ngắn gọn về dịch vụ
         </p>
       </div>
-
+      <p className={styles.servicePrice}>100.000đ/h</p>
       <div className={styles.serviceFooter}>
-        <Link className={styles.hireNowButton} to={`/service/${id}` } state = {serviceId}>
-          <button className={styles.hireButton}>
-            Thuê Ngay
-          </button>
-        </Link>
-
+        <button className={styles.hireButton}>Thuê Ngay</button>
         <div className={styles.ratingSection}>
           <div className={styles.ratingContainer}>
             <p className={styles.ratingStars}>
-              {rating} <StarIcon />
+              4.8 <StarIcon />
             </p>
-            <p>{reviews}</p>
+            <p>(150)</p>
           </div>
           <div className={styles.avatarContainer}>
             {Array(5)

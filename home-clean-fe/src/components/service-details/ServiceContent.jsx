@@ -10,7 +10,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
 
   const location = useLocation();
   const state = location.state || {};
- 
+
   useEffect(() => {
     if (!id) return;
 
