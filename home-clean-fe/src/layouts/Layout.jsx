@@ -19,7 +19,6 @@ const Layout = () => {
         "/login/cleaner",
         "/homeclean",
         "/",
-        "/infomationcleaner",
 
     ].includes(location.pathname)
 
