@@ -27,8 +27,7 @@ const ServiceDescription = ( {description}) => {
         <p style={{ color: "#667085", marginTop: 14, maxWidth: "70%" }}>{description}</p>
 
       </div>
-      <p style={{ color: "#667085", marginTop: 14, maxWidth: "70%" }}>{description}</p>
-    </div>
+
   );
 };
 

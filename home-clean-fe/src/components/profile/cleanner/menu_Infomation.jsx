@@ -11,7 +11,7 @@ import profileImg from "../../../assets/imgProfile/imgProfile.svg";
 import "../owner/profile.css";
 
 const MenuInfomation = ({ selectedMenu, setSelectedMenu }) => {
-  const { user } = useContext(AuthContext); // Lấy thông tin người dùng
+  const { cleaner } = useContext(AuthContext); // Lấy thông tin người dùng
 
   const handleClick = (menuName) => {
     setSelectedMenu(menuName);
