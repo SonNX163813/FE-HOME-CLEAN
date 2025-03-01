@@ -5,8 +5,6 @@ import houseCleanLogo from '../../../assets/HouseClean_logo.png';
 import Notification from "../../Notification/Notification";
 import styles from "../../../assets/CSS/Notification/Notification.module.css"
 
-
-
 function Navbar() {
   const { user } = useContext(AuthContext); // Lấy user từ AuthContext
   const [isMenuOpen, setIsMenuOpen] = useState(false);

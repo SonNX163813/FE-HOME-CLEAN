@@ -1,13 +1,14 @@
 import ServiceCard from "./ServiceCard";
 import { fetchServices } from "../api/Home_API";
 import { useEffect, useState } from "react";
-import { useLocation  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 
 const SuggestedServices = () => {
   const DEFAULT_IMAGE = "https://file.hstatic.net/1000317132/file/38879381_l_b3812863aa1e4f9a9b30a8149bbe54b4_grande.jpg";
 
   const [services, setServices] = useState([]);
-  
+
   useEffect(() => {
     async function fetchData() {
       const data = await fetchServices();
@@ -19,7 +20,6 @@ const SuggestedServices = () => {
 
   const location = useLocation();
   const state = location.state || {};
- 
 
 
   return (
@@ -33,12 +33,15 @@ const SuggestedServices = () => {
       >
         Dịch vụ tương tự
       </h2>
-      <div style={{ display: "flex", gap: 20 , flexWrap : 'wrap' }}>
+
+      <div style={{ display: "flex", gap: 20, flexWrap: 'wrap' }}>
+
         {/* {Array(5)
           .fill(null)
           .map(() => (
             <ServiceCard />
           ))} */}
+
           {services.length > 0 ? (
             services.map((service) =>
               service.serviceId === state ? ( // ✅ Kiểm tra serviceId
@@ -68,6 +71,7 @@ const SuggestedServices = () => {
           ) : (
             <p>Đang tải dịch vụ...</p>
           )}
+
       </div>
     </div>
   );

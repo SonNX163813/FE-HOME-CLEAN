@@ -25,9 +25,11 @@ const ServiceDescription = ( {description}) => {
           </div>
         </div>
         <p style={{ color: "#667085", marginTop: 14, maxWidth: "70%" }}>{description}</p>
+
       </div>
-    );
-  };
-  
-  export default ServiceDescription;
-  
+      <p style={{ color: "#667085", marginTop: 14, maxWidth: "70%" }}>{description}</p>
+    </div>
+  );
+};
+
+export default ServiceDescription;
