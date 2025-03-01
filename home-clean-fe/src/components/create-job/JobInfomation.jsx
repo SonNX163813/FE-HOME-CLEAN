@@ -1,17 +1,19 @@
 import React ,{ useEffect ,useState } from "react";
-import Time from "./Time";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate  } from "react-router-dom";
 
-const JobInfomation = ({ price, serviceDetailId, serviceId, address,  selectedDate, hour, minute  }) => {
 
+const JobInfomation = ({ selectedDate, hour, minute  }) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const state = location.state || {};
     const [serviceData, setServiceData] = useState(null);
 
     useEffect(() => {
-        if (!serviceDetailId) return; // Kiểm tra nếu chưa có serviceDetailId thì không gọi API
+        if (!state.serviceDetailId) return; 
 
         const fetchServiceData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/services/details/${serviceDetailId}`);
+                const response = await fetch(`http://localhost:8080/api/services/details/${state.serviceDetailId}`);
                 if (!response.ok) {
                     throw new Error("Lỗi khi gọi API");
                 }
@@ -23,7 +25,53 @@ const JobInfomation = ({ price, serviceDetailId, serviceId, address,  selectedDa
         };
 
         fetchServiceData();
-    }, [serviceDetailId]);
+    }, [state.serviceDetailId]);
+
+    const serviceId = state.serviceId;
+        const serviceDetailId = state.serviceDetailId
+
+        const handleCreateJob = async () => {
+            const formattedJobTime = `${selectedDate.getFullYear()}-${(selectedDate.getMonth() + 1)
+                .toString()
+                .padStart(2, '0')}-${selectedDate.getDate().toString().padStart(2, '0')}T${hour
+                .toString()
+                .padStart(2, '0')}:${minute.toString().padStart(2, '0')}:00`;
+        
+            const jobData = {
+                serviceId,
+                serviceDetailId,
+                jobTime: formattedJobTime,
+                customerAddressId: 1,
+                roomSize: 30,
+                imageUrl: "http://example.com/room.jpg",
+            };
+        
+            try {
+                const response = await fetch(`http://localhost:8080/api/customer/1/create-job`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}` // Nếu API yêu cầu token
+                    },
+                    body: JSON.stringify(jobData),
+                });
+                console.log(`${localStorage.getItem("accessToken")}`);
+                
+        
+                console.log("Raw API Response:", response.status, response.statusText);
+        
+                if (response.ok) {
+                    console.log("Job created successfully");
+                    navigate('/ordersuccess');
+                } else {
+                    console.error("Lỗi khi tạo job:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Lỗi kết nối API:", error);
+            }
+        };
+        
+
     
     return (
         <div 
@@ -58,7 +106,7 @@ const JobInfomation = ({ price, serviceDetailId, serviceId, address,  selectedDa
             <p>
                 <span>Địa điểm</span>
                 <span style={{ float: "right" }}>
-                {address}
+                {state.address}
                 </span>
             </p>
             {/* <p>
@@ -89,7 +137,7 @@ const JobInfomation = ({ price, serviceDetailId, serviceId, address,  selectedDa
             >
                 <span>Tổng thanh toán</span>
                 <h4 style={{ textAlign: "right", fontSize: 20}}>
-                    {price} VNĐ
+                    {state.price} VNĐ
                 </h4>
             </div>
             
@@ -122,27 +170,21 @@ const JobInfomation = ({ price, serviceDetailId, serviceId, address,  selectedDa
                         Hủy
                     </div>
                 </Link>
-                <Link
-                to='/ordersuccess'
-                style={{
-                    textDecoration : 'none'
-                }}
-                >
-                    <div
+                <div
                     style={{
-                        height : 40,
-                        background :'rgb(10, 139, 3)',
-                        color : 'white',
-                        width : 180,
-                        borderRadius : 8, 
-                        alignContent : 'center',
-                        textAlign : "center",
-                        cursor : 'pointer'
+                        height: 40,
+                        background: 'rgb(10, 139, 3)',
+                        color: 'white',
+                        width: 180,
+                        borderRadius: 8,
+                        alignContent: 'center',
+                        textAlign: "center",
+                        cursor: 'pointer'
                     }}
-                    >
-                        Đăng việc
-                    </div>
-                </Link>
+                    onClick={handleCreateJob}
+                >
+                    Đăng việc
+                </div>
                 
             </div>
         </div>

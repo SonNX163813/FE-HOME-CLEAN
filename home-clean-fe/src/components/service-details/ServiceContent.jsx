@@ -9,8 +9,8 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
   const [serviceData, setServiceData] = useState(null);
 
   const location = useLocation();
-  const serviceId = location.state?.serviceId;
-
+  const state = location.state || {};
+ 
   useEffect(() => {
     if (!id) return;
 
@@ -104,8 +104,6 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
           >
             Tiếp theo
           </Link>
-
-
         </button>
       </div>
     </div>
