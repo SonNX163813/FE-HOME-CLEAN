@@ -1,27 +1,10 @@
 import serviceImage from "../../assets/imgService/service.png";
 import LocationIcon from "../iconsvg/LocationIcon";
-import { useState, useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import styles from '../../assets/CSS/Service/ServiceContent.module.css'
-import ServiceDescription from "./ServiceDescription";
+import { useState } from "react";
+
 const ServiceContent = ({ setIsShowLocationModal }) => {
-  const { id } = useParams();
-  const [serviceData, setServiceData] = useState(null);
-
-  const location = useLocation();
-  const state = location.state || {};
-
-  useEffect(() => {
-    if (!id) return;
-
-    fetch(`http://localhost:8080/api/services/details/${id}`)
-      .then((res) => res.json())
-      .then((data) => setServiceData(data))
-      .catch((err) => console.error("Lỗi khi gọi API:", err));
-  }, [id]);
-
-  const des = serviceData?.description;
-  const data = "Thạch thất , Hà Nội"
+  const [selectedTime, setSelectedTime] = useState(2);
+  const times = [2, 3, 4];
   return (
     <div className="service-content">
       <div className="layout1">
@@ -39,9 +22,25 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         }}
       >
         <div>
-          <h2> {serviceData?.name || "Dịch vụ"}</h2>
+          <h2>Dọn phòng khách</h2>
+          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+            <p>
+              <span style={{ fontWeight: 600 }}>Danh mục: </span>
+              <span style={{ fontWeight: 400 }}>Dọn nhà</span>
+            </p>
+            <div
+              style={{
+                width: 1,
+                height: 16,
+                backgroundColor: "#E4E7EC",
+              }}
+            ></div>
+            <p>
+              <span style={{ fontWeight: 600 }}>Nhóm: </span>
+              <span style={{ fontWeight: 400 }}>Dọn phòng khách</span>
+            </p>
+          </div>
         </div>
-        <ServiceDescription description={des} />
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <p style={{ fontWeight: 600, fontSize: 16 }}>Chọn vị trí</p>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -66,19 +65,51 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
               </div>
             </div>
             <p style={{ maxWidth: "60%", color: "#B8B8B8" }}>
-              {data}
-
+              Số 36 Đường Tôn Đức Thắng, Khu 2, Thị trấn Côn Đảo, Huyện Côn Đảo,
+              Tỉnh Bà Rịa - Vũng Tàu, Việt Nam.
             </p>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-
-          <p style={{ fontSize: 30, fontWeight: 500 }}>
-            {serviceData?.additionalPrice.toLocaleString()} VNĐ
+          <p style={{ fontWeight: 600, fontSize: 16 }}>Thời lượng</p>
+          <p style={{ fontWeight: 400, fontSize: 14 }}>
+            Ước tính thời gian và diện tích cần dọn dẹp
           </p>
+          <div style={{ display: "flex", gap: 12 }}>
+            {times.map((time) => (
+              <div
+                key={time}
+                className="time-select"
+                style={{
+                  padding: "6px 12px 6px 12px",
+                  backgroundColor: `${selectedTime == time ? "#B0FFDC" : ""}`,
+                  border: `2px solid ${
+                    selectedTime == time ? "#039855" : "#d4d4d4"
+                  }`,
+                  cursor: "pointer",
+                }}
+                onClick={() => setSelectedTime(time)}
+              >
+                {time} giờ
+              </div>
+            ))}
+          </div>
         </div>
+        <p style={{ position: "relative", fontSize: 30, fontWeight: 500 }}>
+          100.000 đ
+          <span
+            style={{
+              position: "absolute",
+              bottom: -4,
+              fontSize: 20,
+              fontWeight: 500,
+              color: "#475467",
+            }}
+          >
+            /2h
+          </span>
+        </p>
         <button
-          className={styles.btn_Next}
           style={{
             width: "fit-content",
             padding: "12px 16px 12px 16px",
@@ -88,22 +119,9 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
             fontWeight: 700,
             borderRadius: 7,
             cursor: "pointer",
-            transitionDuration: '0.5s'
           }}
         >
-          <Link
-            className={styles.link_Next}
-            to="/createjob"
-            state={{
-              price: serviceData?.additionalPrice.toLocaleString(),
-              serviceDetailId: serviceData?.serviceDetailId,
-              serviceId: serviceId,
-              address: data,
-              name: serviceData?.name
-            }}
-          >
-            Tiếp theo
-          </Link>
+          Tiếp theo
         </button>
       </div>
     </div>

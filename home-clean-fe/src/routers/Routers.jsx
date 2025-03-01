@@ -54,7 +54,6 @@ const Routers = () => {
 
             <Route path="/service/:id?" element={<ServiceDetails />} />
 
-
             <Route path="/createjob" element={<CreateJob />} />
 
             <Route path="/ordersuccess" element={<OrderSuccess />} />
