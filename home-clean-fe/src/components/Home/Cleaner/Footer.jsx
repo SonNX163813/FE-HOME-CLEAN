@@ -8,7 +8,7 @@ function Footer() {
                 <div className="footer-section">
 
                     <div className="logo">
-                        <Link to="/homeclean">
+                        <Link to="/homecleaner">
                             <img
                                 src={logo}
                                 alt="House Clean Logo"

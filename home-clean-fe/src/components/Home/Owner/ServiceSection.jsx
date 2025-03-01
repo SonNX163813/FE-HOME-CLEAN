@@ -14,7 +14,7 @@ function ServiceSection() {
     }
     fetchData();
   }, []);
-
+  
 
   return (
     <section className="service-section">
@@ -34,7 +34,7 @@ function ServiceSection() {
                     description={detail.description || "Không có mô tả"}
                     rating={4.6}
                     reviews={100}
-                    serviceId={service.serviceId}
+                    serviceId = {service.serviceId}
                   />
                 ))
               ) : (

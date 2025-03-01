@@ -12,7 +12,7 @@ const ServiceDetails = () => {
       <div className="body-service">
         <ServiceContent setIsShowLocationModal={setIsShowLocationModal} />
         <div style={{
-          height: 100
+          height:100
         }}></div>
         <SuggestedServices />
         {isShowLocationModal && (

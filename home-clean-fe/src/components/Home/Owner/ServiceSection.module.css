@@ -1,28 +1,26 @@
 .service-slider {
-  overflow-x: auto;
-  white-space: nowrap;
-  scroll-behavior: smooth;
-  padding-bottom: 10px;
-}
-
-.service-list {
-  display: flex;
-  gap: 16px;
-  /* Khoảng cách giữa các thẻ */
-  animation: scrollLeft 10s linear infinite;
-}
-
-@keyframes scrollLeft {
-  0% {
-    transform: translateX(0%);
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
   }
-
-  100% {
-    transform: translateX(-100%);
+  
+  .service-list {
+    display: flex;
+    gap: 16px; /* Khoảng cách giữa các thẻ */
+    animation: scrollLeft 10s linear infinite;
   }
-}
-
-.service-list:hover {
-  animation-play-state: paused;
-  /* Dừng khi hover */
-}
+  
+  @keyframes scrollLeft {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .service-list:hover {
+    animation-play-state: paused; /* Dừng khi hover */
+  }
+  

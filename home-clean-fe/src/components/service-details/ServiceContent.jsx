@@ -1,7 +1,7 @@
 import serviceImage from "../../assets/imgService/service.png";
 import LocationIcon from "../iconsvg/LocationIcon";
-import { useState, useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useState , useEffect} from "react";
+import { Link , useLocation ,useParams   } from "react-router-dom";
 import styles from '../../assets/CSS/Service/ServiceContent.module.css'
 import ServiceDescription from "./ServiceDescription";
 const ServiceContent = ({ setIsShowLocationModal }) => {
@@ -9,7 +9,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
   const [serviceData, setServiceData] = useState(null);
 
   const location = useLocation();
-  const serviceId = location.state?.serviceId;
+  const state = location.state || {};
 
   useEffect(() => {
     if (!id) return;
@@ -20,7 +20,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
       .catch((err) => console.error("Lỗi khi gọi API:", err));
   }, [id]);
 
-  const des = serviceData?.description;
+  const  des = serviceData?.description;
   const data = "Thạch thất , Hà Nội"
   return (
     <div className="service-content">
@@ -41,7 +41,7 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         <div>
           <h2> {serviceData?.name || "Dịch vụ"}</h2>
         </div>
-        <ServiceDescription description={des} />
+        <ServiceDescription description={des}  />
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <p style={{ fontWeight: 600, fontSize: 16 }}>Chọn vị trí</p>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -74,39 +74,41 @@ const ServiceContent = ({ setIsShowLocationModal }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
 
           <p style={{ fontSize: 30, fontWeight: 500 }}>
-            {serviceData?.additionalPrice.toLocaleString()} VNĐ
+             {serviceData?.additionalPrice.toLocaleString()} VNĐ
           </p>
         </div>
-        <button
-          className={styles.btn_Next}
-          style={{
-            width: "fit-content",
-            padding: "12px 16px 12px 16px",
-            color: "white",
-            backgroundColor: "#039855",
-            border: "none",
-            fontWeight: 700,
-            borderRadius: 7,
-            cursor: "pointer",
-            transitionDuration: '0.5s'
-          }}
-        >
-          <Link
-            className={styles.link_Next}
-            to="/createjob"
-            state={{
-              price: serviceData?.additionalPrice.toLocaleString(),
-              serviceDetailId: serviceData?.serviceDetailId,
-              serviceId: serviceId,
-              address: data,
-              name: serviceData?.name
+          <button
+            className={styles.btn_Next}
+            style={{
+              width: "fit-content",
+              padding: "12px 16px 12px 16px",
+              color: "white",
+              backgroundColor: "#039855",
+              border: "none",
+              fontWeight: 700,
+              borderRadius: 7,
+              cursor: "pointer",
+              transitionDuration : '0.5s'
             }}
           >
-            Tiếp theo
-          </Link>
+            <Link 
+              className={styles.link_Next} 
+              to="/createjob"
+              state={{
+                price: serviceData?.additionalPrice.toLocaleString(),
+                serviceDetailId: serviceData?.serviceDetailId,
+                serviceId: state,
+                address: data,
+                name: serviceData?.name,
+                test : '1'
+              }}
+            >
+              Tiếp theo
+            </Link>
 
+            
+          </button>
 
-        </button>
       </div>
     </div>
   );

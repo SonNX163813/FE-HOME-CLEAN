@@ -5,6 +5,7 @@ import StarIcon from "../../components/iconsvg/StarIcon";
 import { Link } from "react-router-dom";
 
 const ServiceCard = ({ id, image, title, description, rating, reviews, serviceId }) => {
+
   return (
     <div className={styles.serviceCard}>
       <img className={styles.serviceImage} src={serviceImg} alt="Service" />
@@ -19,7 +20,9 @@ const ServiceCard = ({ id, image, title, description, rating, reviews, serviceId
       </div>
 
       <div className={styles.serviceFooter}>
+
         <Link className={styles.hireNowButton} to={`/service/${id}`} state={serviceId}>
+
           <button className={styles.hireButton}>
             Thuê Ngay
           </button>
