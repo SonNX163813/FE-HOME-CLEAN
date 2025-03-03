@@ -6,13 +6,15 @@ import NewsSection from "../../../components/Home/Owner/NewsSection"
 import TestimonialSection from "../../../components/Home/Owner/TestimonialSection"
 import Navbar from "../../../components/Home/Owner/Navbar"
 import Footer from "../../../components/Home/Owner/Footer"
+import JobUpload from "../../../components/Home/Owner/JobUpload"
 
 const HomePage = () => {
     return (
         <>
             <Navbar />
             <Hero />
-            <ServiceSection />
+            <JobUpload />
+            <ServiceSection title="Dịch vụ tiêu biểu" />
             <FeaturesSection />
             <TestimonialSection />
             <NewsSection />
