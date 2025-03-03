@@ -24,7 +24,6 @@ const MenuInfomation = ({ selectedMenu, setSelectedMenu }) => {
         <div className="profile-details">
           <p className="profile-name"><strong>{cleaner?.cleanerName || "Người dùng"}</strong></p>
           <p className="profile-email">{cleaner?.cleanerEmail || "Chưa có email"}</p>
-
         </div>
       </div>
       <hr className="menu-separator" />

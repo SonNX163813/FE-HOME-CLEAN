@@ -24,7 +24,7 @@ const CreateJob = () => {
                 <Note />
                 <Pay />
                 <h3 style={{ margin: "15px 0px" }}>Thông tin công việc</h3>
-                <JobInfomation 
+                <JobInfomation
                     selectedDate={selectedDate}
                     hour={hour}
                     minute={minute}

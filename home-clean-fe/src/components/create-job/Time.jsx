@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button } from "antd";
 import styles from "../../assets/CSS/createjob/Time.module.css";
 
@@ -45,7 +45,7 @@ const Time = ({ onTimeChange }) => {
     };
 
     const handleMinuteChange = (e) => {
-        let value = e.target.value.replace(/^0+/, ""); 
+        let value = e.target.value.replace(/^0+/, "");
         value = parseInt(value, 10);
         if (isNaN(value) || value < 0) value = 0;
         if (value > 59) value = 59;
@@ -78,9 +78,8 @@ const Time = ({ onTimeChange }) => {
                         <Button
                             key={day.date}
                             type={selectedDate?.toDateString() === day.fullDate.toDateString() ? "primary" : "default"}
-                            className={`${styles.dayButton} ${
-                                selectedDate?.toDateString() === day.fullDate.toDateString() ? styles.selected : ""
-                            }`}
+                            className={`${styles.dayButton} ${selectedDate?.toDateString() === day.fullDate.toDateString() ? styles.selected : ""
+                                }`}
                             onClick={() => handleDateChange(day.fullDate)}
                         >
                             <b>{day.label}</b>
@@ -110,4 +109,3 @@ const Time = ({ onTimeChange }) => {
 };
 
 export default Time;
-
