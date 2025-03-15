@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function CleanerCard({ cleanerId, cleanerImg, cleanerName, rating, reviews }) {
+function CleanerCard({ cleanerId, cleanerImg, cleanerName, rating, reviews, isOnline  }) {
   return (
     <div className="service-card">
       <div className="card-image">
@@ -25,6 +25,9 @@ function CleanerCard({ cleanerId, cleanerImg, cleanerName, rating, reviews }) {
           <div className="rating">
             <span className="stars">{rating} ★</span>
             <span className="review-count">({reviews} đánh giá)</span>
+            <p style={{ color: isOnline ? "green" : "gray", fontWeight: "bold" }}>
+              {isOnline ? "Online" : "Offline"}
+            </p>
           </div>
         </div>
         <div className="card-footer">
