@@ -1,0 +1,63 @@
+import React, { useEffect, useState } from 'react';
+import styles from "../../assets/CSS/Notification/Notification.module.css";
+
+const ConversationList = ({ onSelect, userId, role }) => {
+    const [conversations, setConversations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (!userId || !role) return;
+
+        const apiUrl =
+        role === 'customer'
+            ? `http://localhost:8080/api/conversations/${userId}/getConversationByCustomerId`
+            : `http://localhost:8080/api/conversations/${userId}/getConversationByCleanerId`;
+
+        fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data && Array.isArray(data.conversations)) { 
+            setConversations(data.conversations);
+            } else {
+            setConversations([]);
+            }
+        })
+        .catch((error) => {
+            setError(error.message);
+            setConversations([]);
+        })
+        .finally(() => setLoading(false));
+    }, [userId, role]);
+
+  return (
+    <div className={styles.conversationList}>
+        <h3>Danh sách chat ({role === 'customer' ? 'Khách hàng' : 'Nhân viên'})</h3>
+
+        {loading && <p>Đang tải danh sách cuộc trò chuyện...</p>}
+        {error && <p style={{ color: 'red' }}>Lỗi: {error}</p>}
+
+        {!loading && !error && conversations.length === 0 ? (
+            <p>Không có cuộc trò chuyện nào.</p>
+        ) : (
+            conversations.map((conversation) => (
+            <div
+                key={conversation.conversation_id}
+                onClick={() => onSelect({
+                id: conversation.conversation_id,
+                customerId: conversation.customer_id,
+                employeeId: conversation.cleaner_id
+                })}
+                className={styles.conversationItem}
+            >
+                {role === 'customer'
+                ? `Chat với Cleaner ${conversation.cleaner_id}`
+                : `Chat với Customer ${conversation.customer_id}`}
+            </div>
+            ))
+        )}
+    </div>
+  );
+};
+
+export default ConversationList;

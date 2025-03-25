@@ -1,0 +1,309 @@
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Card,
+  Row,
+  Col,
+  Typography,
+  Button,
+  Modal,
+  message,
+  Descriptions,
+  Tag,
+  Divider,
+  Spin,
+  List,
+  Space
+} from "antd";
+import {
+  ClockCircleOutlined,
+  EnvironmentOutlined,
+  DollarOutlined,
+  MessageOutlined,
+  CheckCircleOutlined
+} from "@ant-design/icons";
+import { AuthContext } from "../../context/AuthContext";
+import "../../assets/CSS/work/WorkDetailsDescription.module.css"
+import { BASE_URL } from "../../utils/config";
+
+const { Title, Text, Paragraph } = Typography;
+
+const WorkDetailsDescription = () => {
+  const { jobId } = useParams();
+  const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Track window resize for responsive behavior
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Determine layout based on screen width
+  const isMobile = windowWidth < 768;
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${BASE_URL}/cleaner/job/${jobId}`, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setJob(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy chi tiết công việc:", error);
+        message.error("Không thể tải chi tiết công việc");
+        setLoading(false);
+      });
+  }, [jobId, token]);
+
+  const handleApplyJob = () => {
+    if (!token) {
+      message.error("Bạn cần đăng nhập để nhận việc!");
+      return;
+    }
+
+    fetch(`${BASE_URL}/cleaner/apply-job/${jobId}`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Không thể nhận việc!");
+        }
+        return response.json();
+      })
+      .then(() => {
+        navigate("/applysuccess");
+        setIsModalOpen(false);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi nhận việc:", error);
+        message.error("Nhận việc thất bại, vui lòng thử lại!");
+      });
+  };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '50px' }}>
+        <Spin size="large" tip="Đang tải chi tiết công việc..." />
+      </div>
+    );
+  }
+
+  if (!job) {
+    return (
+      <div style={{ textAlign: 'center', padding: '50px' }}>
+        <Title level={4}>Không tìm thấy thông tin công việc</Title>
+        <Button type="primary" onClick={() => navigate(-1)}>Quay lại</Button>
+      </div>
+    );
+  }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  };
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+  };
+
+  // Xử lý hiển thị tên dịch vụ, lấy từ service đầu tiên nếu có
+  const serviceName = job.services && job.services.length > 0
+    ? job.services[0].serviceName
+    : job.serviceName || "Dịch vụ vệ sinh";
+
+  // Xử lý hiển thị mô tả dịch vụ, lấy từ service đầu tiên nếu có
+  const serviceDescription = job.services && job.services.length > 0
+    ? job.services[0].serviceDescription
+    : job.serviceDescription || "Không có mô tả";
+
+  return (
+    <Row
+      gutter={[16, 16]}
+      style={{
+        maxWidth: 1200,
+        margin: '0 auto',
+        padding: isMobile ? '0 12px' : 0
+      }}
+    >
+      <Col xs={24} md={12}>
+        <Card bodyStyle={{ padding: isMobile ? 16 : 24 }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            justifyContent: 'space-between',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            marginBottom: 16
+          }}>
+            <Title level={4} style={{ margin: isMobile ? '0 0 8px 0' : 0 }}>{serviceName}</Title>
+            <Tag color={job.status === "OPEN" ? "green" : "default"} style={{ marginTop: isMobile ? 8 : 0 }}>
+              {job.status === "OPEN" ? "Đang mở" : "Đã đóng"}
+            </Tag>
+          </div>
+
+          <Descriptions
+            layout={isMobile ? "horizontal" : "vertical"}
+            column={isMobile ? 1 : 3}
+            colon={false}
+            style={{ marginBottom: isMobile ? 16 : 24 }}
+          >
+            <Descriptions.Item
+              label={<Text type="secondary">Thù lao</Text>}
+              labelStyle={{ fontSize: 14 }}
+              contentStyle={{ fontWeight: 'bold' }}
+            >
+              <div style={{ fontSize: isMobile ? 14 : 16 }}>
+                <DollarOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                {job.totalPrice.toLocaleString()} VNĐ
+              </div>
+            </Descriptions.Item>
+
+            <Descriptions.Item
+              label={<Text type="secondary">Địa điểm</Text>}
+              labelStyle={{ fontSize: 14 }}
+              contentStyle={{ fontWeight: 'bold' }}
+            >
+              <div style={{ fontSize: isMobile ? 14 : 16 }}>
+                <EnvironmentOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                {job.customerAddress}
+              </div>
+            </Descriptions.Item>
+
+            <Descriptions.Item
+              label={<Text type="secondary">Thời gian</Text>}
+              labelStyle={{ fontSize: 14 }}
+              contentStyle={{ fontWeight: 'bold' }}
+            >
+              <div style={{ fontSize: isMobile ? 14 : 16 }}>
+                <ClockCircleOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                {formatTime(job.scheduledTime)} - {formatDate(job.scheduledTime)}
+              </div>
+            </Descriptions.Item>
+          </Descriptions>
+
+          <div style={{ marginTop: isMobile ? 16 : 24, display: 'flex', justifyContent: 'center' }}>
+            <Button
+              type="primary"
+              size={isMobile ? "middle" : "large"}
+              icon={<CheckCircleOutlined />}
+              onClick={() => setIsModalOpen(true)}
+              style={{
+                width: isMobile ? '100%' : 'auto',
+                minWidth: isMobile ? 'auto' : 200,
+                background: '#52c41a',
+                borderColor: '#52c41a'
+              }}
+            >
+              Nhận việc
+            </Button>
+          </div>
+        </Card>
+      </Col>
+
+      <Col xs={24} md={12}>
+        <Card bodyStyle={{ padding: isMobile ? 16 : 24 }}>
+          <Title level={4}>Thông tin chung</Title>
+
+          <Title level={5}>Mô tả công việc</Title>
+          <Paragraph>{serviceDescription}</Paragraph>
+
+          <Title level={5}>Loại dịch vụ</Title>
+          <List
+            size={isMobile ? "small" : "default"}
+            bordered
+            style={{ marginBottom: 16 }}
+            dataSource={job.services && job.services.length > 0 ? job.services : (job.serviceDetails || [])}
+            renderItem={item => (
+              <List.Item>
+                <Typography.Text>
+                  {item.serviceDetailName || item.name} {item.description}
+                  {item.areaRange && ` (${item.areaRange})`}
+                </Typography.Text>
+              </List.Item>
+            )}
+          />
+
+          <Title level={5}>Ưu đãi</Title>
+          <Paragraph>
+            {job.services && job.services.length > 0 && job.services[0].discounts
+              ? job.services[0].discounts
+              : "Không có ưu đãi"}
+          </Paragraph>
+
+          <Title level={5}>Khách hàng</Title>
+          <Space direction="vertical" size="small" style={{ width: '100%' }}>
+            <div style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              marginBottom: isMobile ? 8 : 0
+            }}>
+              <div style={{
+                width: isMobile ? '100%' : '150px',
+                flexShrink: 0,
+                marginBottom: isMobile ? 4 : 0
+              }}>
+                Tên khách hàng:
+              </div>
+              <div>{job.customerName}</div>
+            </div>
+            <div style={{
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row'
+            }}>
+              <div style={{
+                width: isMobile ? '100%' : '150px',
+                flexShrink: 0,
+                marginBottom: isMobile ? 4 : 0
+              }}>
+                Số điện thoại:
+              </div>
+              <div>{job.customerPhone}</div>
+            </div>
+          </Space>
+        </Card>
+      </Col>
+
+      <Modal
+        title="Xác nhận nhận việc"
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        centered
+        width={isMobile ? '90%' : 520}
+        footer={[
+          <Button key="back" onClick={() => setIsModalOpen(false)}>
+            Hủy
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            onClick={handleApplyJob}
+            style={{ background: '#52c41a', borderColor: '#52c41a' }}
+          >
+            Xác nhận
+          </Button>,
+        ]}
+      >
+        <p>Bạn có chắc chắn muốn nhận công việc này không?</p>
+      </Modal>
+    </Row>
+  );
+};
+
+export default WorkDetailsDescription;
